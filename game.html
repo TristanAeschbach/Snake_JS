@@ -202,8 +202,8 @@
                     break;
             }
             output(x, y);
-            tail(current);
             checkApple();
+            tail(current);
         }, 500);
     }
 
@@ -287,14 +287,11 @@
         for (let i = 1; i<length; i++){
             document.getElementById(positions[i]).style.backgroundColor = "Gray";
         }
-
     }
     function increaseTail(current){
-        let copy = positions;
-        positions.forEach(function (element, index, array){
-            positions[index+1] = copy[index];
-        })
-        positions[1] = current;
+        positions = positions.concat(positions.splice(0,1));
+        positions[length-1] = positions[0];
+        positions[0] = current;
     }
     /*function checkTail(){
         for (let i in positions){
@@ -305,7 +302,7 @@
     }*/
 
     function gameOver(){
-        window.location.replace("gameOver.php?score="+length);
+        window.location.replace("gameOver.html");
     }
 </script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
