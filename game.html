@@ -21,15 +21,15 @@
             border: solid 1px black;
             width: 5em;
             height: 5em;
-            padding: 1em;
+            margin: 1em;
         }
     </style>
 </head>
 <body>
 <h1> The Best Snake Game in the World</h1>
-<h2 id="test"></h2>
-<h2 id="test2"></h2>
-<h2 id="test3"></h2>
+<p>No graphics, no soundtrack, just snake.</p>
+<p>Between 0 and 500 ms Input-Lag, depending on When you click.</p>
+<p>Use WASD or Arrow Keys to control the Snake.</p>
 <table>
     <tr id="0">
         <td class="cell" id="00"></td>
@@ -156,14 +156,13 @@
     let x = Math.round(Math.random()*9);
     let y = Math.round(Math.random()*5);
     let current = ""+x+y;
+    let last = "";
     let positions = [current];
-    let setWhite = [""];
     let game = 1;
     let length = 1;
     let direction = "right";
     let applePos = apple();
 
-    document.getElementById("test").innerHTML = current;
     document.getElementById(current).style.backgroundColor = "Black";
 
     main();
@@ -201,10 +200,11 @@
 
                     break;
             }
-            output(x, y);
             checkApple();
+            output(x, y);
             tail(current);
-        }, 500);
+            checkTail();
+        }, 400);
     }
 
     document.addEventListener('keydown', function (event) {
@@ -259,47 +259,50 @@
     function output(x, y) {
         document.getElementById(current).style.backgroundColor = "White";
         current = "" + x + y;
-        document.getElementById("test").innerHTML = current;
         document.getElementById(current).style.backgroundColor = "Black";
     }
 
     function apple(){
         let aX = Math.round(Math.random()*9);
         let aY = Math.round(Math.random()*9);
-        let apple = ""+aX+aY;
-        document.getElementById(apple).style.backgroundColor = "Green";
-        return apple;
+        let Apple = ""+aX+aY;
+        positions.forEach(function (value, index, array){
+            if (Apple === value){
+                Apple = apple();
+            }
+        })
+        document.getElementById(Apple).style.backgroundColor = "Green";
+        return Apple;
     }
     function checkApple(){
         if (applePos === current){
             length = length+1;
-            increaseTail(current);
+            increaseTail();
             applePos = apple();
+            return true;
         }
     }
 
     function tail(current){
         positions = positions.concat(positions.splice(0,1));
         document.getElementById(positions[0]).style.backgroundColor = "White";
+        last = positions[0];
         positions[0] = current;
-        document.getElementById("test2").innerHTML = length;
-        document.getElementById("test3").innerHTML = positions.toString();
         for (let i = 1; i<length; i++){
             document.getElementById(positions[i]).style.backgroundColor = "Gray";
         }
     }
-    function increaseTail(current){
-        positions = positions.concat(positions.splice(0,1));
-        positions[length-1] = positions[0];
-        positions[0] = current;
+    function increaseTail(){
+        let yeet = [positions.shift()];
+        positions = yeet.concat(last, positions);
     }
-    /*function checkTail(){
-        for (let i in positions){
-            if (positions[i] === current){
+    function checkTail(){
+        positions.forEach(function (value, index, array){
+            if(value === current && index !== 0){
                 gameOver();
             }
-        }
-    }*/
+        });
+    }
 
     function gameOver(){
         window.location.replace("gameOver.html");
