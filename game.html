@@ -266,7 +266,7 @@
         let aX = Math.round(Math.random()*9);
         let aY = Math.round(Math.random()*9);
         let Apple = ""+aX+aY;
-        positions.forEach(function (value, index, array){
+        positions.forEach(function (value){
             if (Apple === value){
                 Apple = apple();
             }
@@ -297,7 +297,7 @@
         positions = yeet.concat(last, positions);
     }
     function checkTail(){
-        positions.forEach(function (value, index, array){
+        positions.forEach(function (value, index){
             if(value === current && index !== 0){
                 gameOver();
             }
