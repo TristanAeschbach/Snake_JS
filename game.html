@@ -158,8 +158,6 @@
     let current = ""+x+y;
     let last = "";
     let positions = [current];
-    let grid = ["00","01","02","03","04","05","06","07","08","09"];
-    let game = 1;
     let length = 1;
     let direction = "right";
     let applePos = apple();
@@ -251,9 +249,6 @@
                     direction = "right";
                 }
                 break;
-            case "Space":
-                game = 0;
-                break;
         }
     });
 
@@ -294,8 +289,8 @@
         }
     }
     function increaseTail(){
-        let yeet = [positions.shift()];
-        positions = yeet.concat(last, positions);
+        let temp = [positions.shift()];
+        positions = temp.concat(last, positions);
     }
     function checkTail(){
         positions.forEach(function (value, index){
