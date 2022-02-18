@@ -203,6 +203,7 @@
             output(x, y);
             tail(current);
             checkTail();
+            checkScore();
         }, 300);
     }
 
@@ -252,6 +253,11 @@
         }
     });
 
+    function checkScore(){
+        if (length > 99){
+            window.location.replace("win.html");
+        }
+    }
     function output(x, y) {
         document.getElementById(current).style.backgroundColor = "White";
         current = "" + x + y;
